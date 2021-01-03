@@ -3,6 +3,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
     <title>Caesar III Dwelling Calculator</title>
+    <link rel="shortcut icon" href="/images/caesar_iii_custom_icon.ico" type="image/x-icon">
     </head>
     <body>
     <div style="width: 400; display:inline-flex">
@@ -91,7 +92,7 @@
     <div class="wrapper">
         <div id="chart"></div>
         <script>
-            let dwells = [
+            const dwells = [
                 "None",
                 "Small tent",
                 "Large tent",
@@ -114,11 +115,6 @@
                 "Large palace",
                 "Luxury Palace",
             ]
-            var proReq = 0;
-            var popReq = 0;
-            var dwelling1 = "";
-            var dwelling2 = "";
-
             const dwellings = {}
             async function getDwellings() {
                 const csv = await fetch('Caesar.csv');
@@ -156,23 +152,19 @@
                 })
             }
             getDwellings();
-
-
-            
-
             function formChanged() {
-                proReq = Number(document.getElementById("prosperityRequrement").value);
-                popReq = Number(document.getElementById("populationRequrement").value);
-                dwelling1 = document.getElementById("dwelling1").value;
-                dwelling2 = document.getElementById("dwelling2").value;
-                var potteryLimitation = Number(document.getElementById("potteryLimitation").value);
-                var furnitureLimitation = Number(document.getElementById("furnitureLimitation").value);
-                var oilLimitation = Number(document.getElementById("oilLimitation").value);
-                var wineLimitation = Number(document.getElementById("wineLimitation").value);
+                const proReq = Number(document.getElementById("prosperityRequrement").value);
+                const popReq = Number(document.getElementById("populationRequrement").value);
+                const dwelling1 = document.getElementById("dwelling1").value;
+                const dwelling2 = document.getElementById("dwelling2").value;
+                const potteryLimitation = Number(document.getElementById("potteryLimitation").value);
+                const furnitureLimitation = Number(document.getElementById("furnitureLimitation").value);
+                const oilLimitation = Number(document.getElementById("oilLimitation").value);
+                const wineLimitation = Number(document.getElementById("wineLimitation").value);
                 if (dwelling1 != "None" && dwelling2 != "None"){
                     
                     data = getData(proReq, popReq, dwelling1, dwelling2, potteryLimitation, furnitureLimitation, oilLimitation, wineLimitation);
-                    var layout = {
+                    const layout = {
                         title: {
                             text: 'Caesar 3 dwelling configuration',
                         },
@@ -182,9 +174,7 @@
                         yaxis: {
                             title: dwelling1
                         },
-                        sliders: {
-                            
-                        }
+                        hovermode: 'closest',
                     }
                     Plotly.newPlot('chart', data, layout);
                 }
@@ -194,12 +184,12 @@
 
             function getData(proReq, popReq, dwelling1, dwelling2, pottery = NaN, furniture = NaN, oil = NaN, wine = NaN) {
 
-                var dw1 = Number(popReq/ dwellings[dwelling1].population), dw2 = Number(popReq / dwellings[dwelling2].population);
-                var xs = [], ys = [], text = [];
+                const dw1 = Number(popReq/ dwellings[dwelling1].population), dw2 = Number(popReq / dwellings[dwelling2].population);
+                const xs = [], ys = [], text = [];
                 for (let i=0; i<=dw1+2; i++)
                     for (let j=0; j<=dw2+2; j++) {
-                        var popCur = i * dwellings[dwelling1].population + j * dwellings[dwelling2].population
-                        var proCur = (i * dwellings[dwelling1].prosperity + j * dwellings[dwelling2].prosperity) / (i + j)
+                        const popCur = i * dwellings[dwelling1].population + j * dwellings[dwelling2].population
+                        const proCur = (i * dwellings[dwelling1].prosperity + j * dwellings[dwelling2].prosperity) / (i + j)
                         if (popCur >= popReq
                             && proCur >= proReq){
                             if (pottery != NaN && pottery > 0 && pottery * 200 / 12 < dwellings[dwelling1].pottery * i + dwellings[dwelling2].pottery *j) continue;
@@ -208,10 +198,10 @@
                             if (wine != NaN && wine > 0 && wine * 200 / 12 < dwellings[dwelling1].wine1 * i + dwellings[dwelling2].wine1 *j) continue;
                             ys.push(i);
                             xs.push(j);
-                            text.push(proCur.toFixed(2).toString() + " / " + popCur.toString())
+                            text.push("Prosperity: " + proCur.toFixed(2).toString() + " | Population: " + popCur.toString())
                         }
                     };
-                var trace = {
+                const trace = {
                     x: xs,
                     y: ys,
                     text: text,
@@ -220,7 +210,7 @@
                 };
                 return [trace]
             }  
-            //var data = getData(10, 15);
+            //const data = getData(10, 15);
         </script>
     </div>
     </body>
