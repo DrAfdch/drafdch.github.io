@@ -1,0 +1,365 @@
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+    <title>Caesar III Dwelling Calculator</title>
+    </head>
+    <body>
+    <div style="width: 400; display:inline-flex">
+        <div>
+            <p>Prosperity requirement</p>
+            <input id="prosperityRequrement" type="number" step="1" value="" onkeyup="formChanged()"  onchange="formChanged()"/>
+        </div>
+        <div>
+            <p>Population requirement</p>
+            <input id="populationRequrement" type="number" step="50" value="" onkeyup="formChanged()"  onchange="formChanged()"/>
+        </div>
+        <br>
+
+    </div>
+    <div style="width: 400; display:inline-flex;">
+        <div>
+            <p>Dwelling type 1 and 2</p>
+            <select name="" id="dwelling1" onkeyup="formChanged()"  onchange="formChanged()">
+                <option value ="None">None</option>
+                <option value ="Small tent">Small tent</option>
+                <option value ="Large tent">Large tent</option>
+                <option value ="Small shack">Small shack</option>
+                <option value ="Large shack">Large shack</option>
+                <option value ="Small hovel">Small hovel</option>
+                <option value ="Large hovel">Large hovel</option>
+                <option value ="Small casa">Small casa</option>
+                <option value ="Large casa">Large casa</option>
+                <option value ="Small insulae">Small insulae</option>
+                <option value ="Medium insulae">Medium insulae</option>
+                <option value ="Large insulae">Large insulae</option>
+                <option value ="Grand insulae">Grand insulae</option>
+                <option value ="Small villa">Small villa</option>
+                <option value ="Medium villa">Medium villa</option>
+                <option value ="Large villa">Large villa</option>
+                <option value ="Grand villa">Grand villa</option>
+                <option value ="Small palace">Small palace</option>
+                <option value ="Medium palace">Medium palace</option>
+                <option value ="Large palace">Large palace</option>
+                <option value ="Luxury Palace">Luxury Palace</option>
+            </select>
+            <select name="" id="dwelling2" onkeyup="formChanged()"  onchange="formChanged()">
+                <option value ="None">None</option>
+                <option value ="Small tent">Small tent</option>
+                <option value ="Large tent">Large tent</option>
+                <option value ="Small shack">Small shack</option>
+                <option value ="Large shack">Large shack</option>
+                <option value ="Small hovel">Small hovel</option>
+                <option value ="Large hovel">Large hovel</option>
+                <option value ="Small casa">Small casa</option>
+                <option value ="Large casa">Large casa</option>
+                <option value ="Small insulae">Small insulae</option>
+                <option value ="Medium insulae">Medium insulae</option>
+                <option value ="Large insulae">Large insulae</option>
+                <option value ="Grand insulae">Grand insulae</option>
+                <option value ="Small villa">Small villa</option>
+                <option value ="Medium villa">Medium villa</option>
+                <option value ="Large villa">Large villa</option>
+                <option value ="Grand villa">Grand villa</option>
+                <option value ="Small palace">Small palace</option>
+                <option value ="Medium palace">Medium palace</option>
+                <option value ="Large palace">Large palace</option>
+                <option value ="Luxury Palace">Luxury Palace</option>
+            </select>
+        </div>
+    </div>
+    <div style="width: 400; display:inline-flex">
+        <div>
+            <p>Pottery limitation</p>
+            <input id="potteryLimitation" type="number" step="1" value="" onkeyup="formChanged()"  onchange="formChanged()"/>
+        </div>
+        <div>
+            <p>Furniture limitation</p>
+            <input id="furnitureLimitation" type="number" step="1" value="" onkeyup="formChanged()"  onchange="formChanged()"/>
+        </div>
+        <div>
+            <p>Oil limitation</p>
+            <input id="oilLimitation" type="number" step="1" value="" onkeyup="formChanged()"  onchange="formChanged()"/>
+        </div>
+        <div>
+            <p>Wine limitation</p>
+            <input id="wineLimitation" type="number" step="1" value="" onkeyup="formChanged()"  onchange="formChanged()"/>
+        </div>
+        <br>
+
+    </div>
+    <div class="wrapper">
+        <div id="chart"></div>
+        <script>
+            let dwells = [
+                "None",
+                "Small tent",
+                "Large tent",
+                "Small shack",
+                "Large shack",
+                "Small hovel",
+                "Large hovel",
+                "Small casa",
+                "Large casa",
+                "Small insulae",
+                "Medium insulae",
+                "Large insulae",
+                "Grand insulae",
+                "Small villa",
+                "Medium villa",
+                "Large villa",
+                "Grand villa",
+                "Small palace",
+                "Medium palace",
+                "Large palace",
+                "Luxury Palace",
+            ]
+            prosperity = {
+                "None": "None",
+                "Small tent": 5,
+                "Large tent": 10,
+                "Small shack": 15,
+                "Large shack": 20,
+                "Small hovel": 25,
+                "Large hovel": 30,
+                "Small casa": 35,
+                "Large casa": 45,
+                "Small insulae": 50,
+                "Medium insulae": 58,
+                "Large insulae": 65,
+                "Grand insulae": 80,
+                "Small villa": 150,
+                "Medium villa": 180,
+                "Large villa": 400,
+                "Grand villa": 600,
+                "Small palace": 700,
+                "Medium palace": 900,
+                "Large palace": 1500,
+                "Luxury Palace": 1750,
+            };
+            population = {
+                "None": "None",
+                "Small tent": 20,
+                "Large tent": 28,
+                "Small shack": 36,
+                "Large shack": 44,
+                "Small hovel": 52,
+                "Large hovel": 60,
+                "Small casa": 68,
+                "Large casa": 72,
+                "Small insulae": 72,
+                "Medium insulae": 80,
+                "Large insulae": 84,
+                "Grand insulae": 84,
+                "Small villa": 40,
+                "Medium villa": 42,
+                "Large villa": 90,
+                "Grand villa": 100,
+                "Small palace": 106,
+                "Medium palace": 112,
+                "Large palace": 190,
+                "Luxury Palace": 200,
+            };
+            potteryConsumption = {
+                "Small tent": 0,
+                "Large tent": 0,
+                "Small shack": 0,
+                "Large shack": 0,
+                "Small hovel": 0,
+                "Large hovel": 0,
+                "Small casa": 0,
+                "Large casa": 2,
+                "Small insulae": 2,
+                "Medium insulae": 2,
+                "Large insulae": 2,
+                "Grand insulae": 2,
+                "Small villa": 2,
+                "Medium villa": 2,
+                "Large villa": 2,
+                "Grand villa": 2,
+                "Small palace": 2,
+                "Medium palace": 2,
+                "Large palace": 2,
+                "Luxury Palace": 2,
+            }
+            furnitureConsumption = {                
+                "Small tent": 0,
+                "Large tent": 0,
+                "Small shack": 0,
+                "Large shack": 0,
+                "Small hovel": 0,
+                "Large hovel": 0,
+                "Small casa": 0,
+                "Large casa": 0,
+                "Small insulae": 0,
+                "Medium insulae": 2,
+                "Large insulae": 2,
+                "Grand insulae": 2,
+                "Small villa": 2,
+                "Medium villa": 2,
+                "Large villa": 2,
+                "Grand villa": 2,
+                "Small palace": 2,
+                "Medium palace": 2,
+                "Large palace": 2,
+                "Luxury Palace": 2,
+            }
+            oilConsumption = {
+                "Small tent": 0,
+                "Large tent": 0,
+                "Small shack": 0,
+                "Large shack": 0,
+                "Small hovel": 0,
+                "Large hovel": 0,
+                "Small casa": 0,
+                "Large casa": 0,
+                "Small insulae": 0,
+                "Medium insulae": 0,
+                "Large insulae": 2,
+                "Grand insulae": 2,
+                "Small villa": 2,
+                "Medium villa": 2,
+                "Large villa": 2,
+                "Grand villa": 2,
+                "Small palace": 2,
+                "Medium palace": 2,
+                "Large palace": 2,
+                "Luxury Palace": 2,
+            }
+            wineConsumption = { 
+                "Small tent": 0,
+                "Large tent": 0,
+                "Small shack": 0,
+                "Large shack": 0,
+                "Small hovel": 0,
+                "Large hovel": 0,
+                "Small casa": 0,
+                "Large casa": 0,
+                "Small insulae": 0,
+                "Medium insulae": 0,
+                "Large insulae": 0,
+                "Grand insulae": 0,
+                "Small villa": 2,
+                "Medium villa": 2,
+                "Large villa": 2,
+                "Grand villa": 2,
+                "Small palace": 2,
+                "Medium palace": 2,
+                "Large palace": 2,
+                "Luxury Palace": 2,
+            }
+            var proReq = 0;
+            var popReq = 0;
+            var dwelling1 = "";
+            var dwelling2 = "";
+
+            const dwellings = {}
+            async function getDwellings() {
+                const csv = await fetch('Caesar.csv');
+                const data = await csv.text();
+                const rows = data.split('\n').slice(1);
+                rows.forEach(element => {
+                    const row = element.split(';');
+                    dwellings[row[1]] = {
+                        population: row[2],
+                        prosperity: row[3],
+                        desirability: row[4],
+                        entertainment: row[5],
+                        waterAny: row[6],
+                        temple1: row[7],
+                        waterClean: row[8],
+                        schOrLib: row[9],
+                        baths: row[10],
+                        doctOrHosp: row[11],
+                        schAndLib: row[12],
+                        barber: row[13],
+                        temple2: row[14],
+                        doctAndHosp: row[15],
+                        academy: row[16],
+                        temple3: row[17],
+                        hippodrome: row[18],
+                        food1: row[19],
+                        pottery: row[20],
+                        furniture: row[21],
+                        oil: row[22],
+                        food2: row[23],
+                        wine1: row[24],
+                        food3: row[25],
+                        wine2: row[26],
+                    };
+                })
+            }
+            getDwellings();
+
+
+            
+
+            function formChanged() {
+                proReq = parseInt(document.getElementById("prosperityRequrement").value, 10);
+                popReq = parseInt(document.getElementById("populationRequrement").value, 10);
+                dwelling1 = document.getElementById("dwelling1").value;
+                dwelling2 = document.getElementById("dwelling2").value;
+                var potteryLimitation = parseInt(document.getElementById("potteryLimitation").value, 10);
+                var furnitureLimitation = parseInt(document.getElementById("furnitureLimitation").value, 10);
+                var oilLimitation = parseInt(document.getElementById("oilLimitation").value, 10);
+                var wineLimitation = parseInt(document.getElementById("wineLimitation").value, 10);
+                if (dwelling1 != "None" && dwelling2 != "None"){
+                    
+                }
+                data = getData(proReq, popReq, dwelling1, dwelling2, potteryLimitation, furnitureLimitation, oilLimitation, wineLimitation);
+                var layout = {
+                    title: {
+                        text: 'Caesar 3 dwelling configuration',
+                    },
+                    xaxis: {
+                        title: dwelling2
+                    },
+                    yaxis: {
+                        title: dwelling1
+                    },
+                    sliders: {
+                        
+                    }
+                }
+                Plotly.newPlot('chart', data, layout);
+            };
+            
+
+
+            function getData(proReq, popReq, dwelling1, dwelling2, pottery = NaN, furniture = NaN, oil = NaN, wine = NaN) {
+
+                var dw1 = parseInt(popReq/ population[dwelling1], 10), dw2 = parseInt(popReq / population[dwelling2], 10)
+                var xs = [], ys = [], text = [], pott = []
+                for (let i=0; i<=dw1+2; i++)
+                    for (let j=0; j<=dw2+2; j++) {
+                        var popCur = i * dwellings[dwelling1].population + j * dwellings[dwelling2].population
+                        var proCur = (i * prosperity[dwelling1] + j * prosperity[dwelling2]) / (i + j)
+                        if (popCur >= popReq
+                            && proCur >= proReq){
+                            if (pottery != NaN &&
+                            pottery > 0 && 
+                            pottery * 100 / 12 < potteryConsumption[dwelling1] * i + potteryConsumption[dwelling2] *j) continue;
+                            if (furniture != NaN && furniture * 100 / 12 > 0 && furniture < furnitureConsumption[dwelling1] * i + furnitureConsumption[dwelling2] *j) continue;
+                            if (oil != NaN && oil > 0 && oil * 100 / 12 < oilConsumption[dwelling1] * i + oilConsumption[dwelling2] *j) continue;
+                            if (wine != NaN && wine > 0 && wine * 100 / 12 < wineConsumption[dwelling1] * i + wineConsumption[dwelling2] *j) continue;
+                            ys.push(i);
+                            xs.push(j);
+                            text.push(proCur.toFixed(2).toString() + " / " + popCur.toString())
+                            pott.push(i + j)
+                        }
+                    }
+                var trace = {
+                    x: xs,
+                    y: ys,
+                    text: text,
+                    mode: 'markers',
+                    type: 'scatter',
+                    pot: pott,
+                }
+                return [trace]
+            }  
+            var data = getData(10, 15);
+        </script>
+    </div>
+    </body>
+</html>
