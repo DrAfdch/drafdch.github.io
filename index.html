@@ -114,140 +114,6 @@
                 "Large palace",
                 "Luxury Palace",
             ]
-            prosperity = {
-                "None": "None",
-                "Small tent": 5,
-                "Large tent": 10,
-                "Small shack": 15,
-                "Large shack": 20,
-                "Small hovel": 25,
-                "Large hovel": 30,
-                "Small casa": 35,
-                "Large casa": 45,
-                "Small insulae": 50,
-                "Medium insulae": 58,
-                "Large insulae": 65,
-                "Grand insulae": 80,
-                "Small villa": 150,
-                "Medium villa": 180,
-                "Large villa": 400,
-                "Grand villa": 600,
-                "Small palace": 700,
-                "Medium palace": 900,
-                "Large palace": 1500,
-                "Luxury Palace": 1750,
-            };
-            population = {
-                "None": "None",
-                "Small tent": 20,
-                "Large tent": 28,
-                "Small shack": 36,
-                "Large shack": 44,
-                "Small hovel": 52,
-                "Large hovel": 60,
-                "Small casa": 68,
-                "Large casa": 72,
-                "Small insulae": 72,
-                "Medium insulae": 80,
-                "Large insulae": 84,
-                "Grand insulae": 84,
-                "Small villa": 40,
-                "Medium villa": 42,
-                "Large villa": 90,
-                "Grand villa": 100,
-                "Small palace": 106,
-                "Medium palace": 112,
-                "Large palace": 190,
-                "Luxury Palace": 200,
-            };
-            potteryConsumption = {
-                "Small tent": 0,
-                "Large tent": 0,
-                "Small shack": 0,
-                "Large shack": 0,
-                "Small hovel": 0,
-                "Large hovel": 0,
-                "Small casa": 0,
-                "Large casa": 2,
-                "Small insulae": 2,
-                "Medium insulae": 2,
-                "Large insulae": 2,
-                "Grand insulae": 2,
-                "Small villa": 2,
-                "Medium villa": 2,
-                "Large villa": 2,
-                "Grand villa": 2,
-                "Small palace": 2,
-                "Medium palace": 2,
-                "Large palace": 2,
-                "Luxury Palace": 2,
-            }
-            furnitureConsumption = {                
-                "Small tent": 0,
-                "Large tent": 0,
-                "Small shack": 0,
-                "Large shack": 0,
-                "Small hovel": 0,
-                "Large hovel": 0,
-                "Small casa": 0,
-                "Large casa": 0,
-                "Small insulae": 0,
-                "Medium insulae": 2,
-                "Large insulae": 2,
-                "Grand insulae": 2,
-                "Small villa": 2,
-                "Medium villa": 2,
-                "Large villa": 2,
-                "Grand villa": 2,
-                "Small palace": 2,
-                "Medium palace": 2,
-                "Large palace": 2,
-                "Luxury Palace": 2,
-            }
-            oilConsumption = {
-                "Small tent": 0,
-                "Large tent": 0,
-                "Small shack": 0,
-                "Large shack": 0,
-                "Small hovel": 0,
-                "Large hovel": 0,
-                "Small casa": 0,
-                "Large casa": 0,
-                "Small insulae": 0,
-                "Medium insulae": 0,
-                "Large insulae": 2,
-                "Grand insulae": 2,
-                "Small villa": 2,
-                "Medium villa": 2,
-                "Large villa": 2,
-                "Grand villa": 2,
-                "Small palace": 2,
-                "Medium palace": 2,
-                "Large palace": 2,
-                "Luxury Palace": 2,
-            }
-            wineConsumption = { 
-                "Small tent": 0,
-                "Large tent": 0,
-                "Small shack": 0,
-                "Large shack": 0,
-                "Small hovel": 0,
-                "Large hovel": 0,
-                "Small casa": 0,
-                "Large casa": 0,
-                "Small insulae": 0,
-                "Medium insulae": 0,
-                "Large insulae": 0,
-                "Grand insulae": 0,
-                "Small villa": 2,
-                "Medium villa": 2,
-                "Large villa": 2,
-                "Grand villa": 2,
-                "Small palace": 2,
-                "Medium palace": 2,
-                "Large palace": 2,
-                "Luxury Palace": 2,
-            }
             var proReq = 0;
             var popReq = 0;
             var dwelling1 = "";
@@ -295,70 +161,66 @@
             
 
             function formChanged() {
-                proReq = parseInt(document.getElementById("prosperityRequrement").value, 10);
-                popReq = parseInt(document.getElementById("populationRequrement").value, 10);
+                proReq = Number(document.getElementById("prosperityRequrement").value);
+                popReq = Number(document.getElementById("populationRequrement").value);
                 dwelling1 = document.getElementById("dwelling1").value;
                 dwelling2 = document.getElementById("dwelling2").value;
-                var potteryLimitation = parseInt(document.getElementById("potteryLimitation").value, 10);
-                var furnitureLimitation = parseInt(document.getElementById("furnitureLimitation").value, 10);
-                var oilLimitation = parseInt(document.getElementById("oilLimitation").value, 10);
-                var wineLimitation = parseInt(document.getElementById("wineLimitation").value, 10);
+                var potteryLimitation = Number(document.getElementById("potteryLimitation").value);
+                var furnitureLimitation = Number(document.getElementById("furnitureLimitation").value);
+                var oilLimitation = Number(document.getElementById("oilLimitation").value);
+                var wineLimitation = Number(document.getElementById("wineLimitation").value);
                 if (dwelling1 != "None" && dwelling2 != "None"){
                     
-                }
-                data = getData(proReq, popReq, dwelling1, dwelling2, potteryLimitation, furnitureLimitation, oilLimitation, wineLimitation);
-                var layout = {
-                    title: {
-                        text: 'Caesar 3 dwelling configuration',
-                    },
-                    xaxis: {
-                        title: dwelling2
-                    },
-                    yaxis: {
-                        title: dwelling1
-                    },
-                    sliders: {
-                        
+                    data = getData(proReq, popReq, dwelling1, dwelling2, potteryLimitation, furnitureLimitation, oilLimitation, wineLimitation);
+                    var layout = {
+                        title: {
+                            text: 'Caesar 3 dwelling configuration',
+                        },
+                        xaxis: {
+                            title: dwelling2
+                        },
+                        yaxis: {
+                            title: dwelling1
+                        },
+                        sliders: {
+                            
+                        }
                     }
+                    Plotly.newPlot('chart', data, layout);
                 }
-                Plotly.newPlot('chart', data, layout);
             };
             
 
 
             function getData(proReq, popReq, dwelling1, dwelling2, pottery = NaN, furniture = NaN, oil = NaN, wine = NaN) {
 
-                var dw1 = parseInt(popReq/ population[dwelling1], 10), dw2 = parseInt(popReq / population[dwelling2], 10)
-                var xs = [], ys = [], text = [], pott = []
+                var dw1 = Number(popReq/ dwellings[dwelling1].population), dw2 = Number(popReq / dwellings[dwelling2].population);
+                var xs = [], ys = [], text = [];
                 for (let i=0; i<=dw1+2; i++)
                     for (let j=0; j<=dw2+2; j++) {
                         var popCur = i * dwellings[dwelling1].population + j * dwellings[dwelling2].population
-                        var proCur = (i * prosperity[dwelling1] + j * prosperity[dwelling2]) / (i + j)
+                        var proCur = (i * dwellings[dwelling1].prosperity + j * dwellings[dwelling2].prosperity) / (i + j)
                         if (popCur >= popReq
                             && proCur >= proReq){
-                            if (pottery != NaN &&
-                            pottery > 0 && 
-                            pottery * 100 / 12 < potteryConsumption[dwelling1] * i + potteryConsumption[dwelling2] *j) continue;
-                            if (furniture != NaN && furniture * 100 / 12 > 0 && furniture < furnitureConsumption[dwelling1] * i + furnitureConsumption[dwelling2] *j) continue;
-                            if (oil != NaN && oil > 0 && oil * 100 / 12 < oilConsumption[dwelling1] * i + oilConsumption[dwelling2] *j) continue;
-                            if (wine != NaN && wine > 0 && wine * 100 / 12 < wineConsumption[dwelling1] * i + wineConsumption[dwelling2] *j) continue;
+                            if (pottery != NaN && pottery > 0 && pottery * 200 / 12 < dwellings[dwelling1].pottery * i + dwellings[dwelling2].pottery *j) continue;
+                            if (furniture != NaN && furniture > 0 && 200 / 12 < dwellings[dwelling1].furniture * i + dwellings[dwelling2].furniture *j) continue;
+                            if (oil != NaN && oil > 0 && oil * 200 / 12 < dwellings[dwelling1].oil * i + dwellings[dwelling2].oil *j) continue;
+                            if (wine != NaN && wine > 0 && wine * 200 / 12 < dwellings[dwelling1].wine1 * i + dwellings[dwelling2].wine1 *j) continue;
                             ys.push(i);
                             xs.push(j);
                             text.push(proCur.toFixed(2).toString() + " / " + popCur.toString())
-                            pott.push(i + j)
                         }
-                    }
+                    };
                 var trace = {
                     x: xs,
                     y: ys,
                     text: text,
                     mode: 'markers',
                     type: 'scatter',
-                    pot: pott,
-                }
+                };
                 return [trace]
             }  
-            var data = getData(10, 15);
+            //var data = getData(10, 15);
         </script>
     </div>
     </body>
